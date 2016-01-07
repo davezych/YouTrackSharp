@@ -34,6 +34,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Web;
 using YouTrackSharp.Infrastructure;
 
 namespace YouTrackSharp.Admin
@@ -59,6 +60,16 @@ namespace YouTrackSharp.Admin
 
 			return users;
 		}
+
+	    public IEnumerable<User> SearchUsers(string query)
+	    {
+            IEnumerable<AllUsersItem> userItems = _connection.Get<IEnumerable<AllUsersItem>>("admin/user?q=" + HttpUtility.UrlEncode(query));
+
+            foreach (AllUsersItem userItem in userItems)
+            {
+                yield return GetUserByUserName(userItem.Login);
+            }
+        }
 
 		public User GetUserByUserName(string username)
 		{
