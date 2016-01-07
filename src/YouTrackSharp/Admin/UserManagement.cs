@@ -50,15 +50,12 @@ namespace YouTrackSharp.Admin
 
 		public IEnumerable<User> GetAllUsers()
 		{
-			ICollection<User> users = new Collection<User>();
 			IEnumerable<AllUsersItem> userItems = _connection.Get<IEnumerable<AllUsersItem>>("admin/user");
 
 			foreach (AllUsersItem userItem in userItems)
 			{
-				users.Add(GetUserByUserName(userItem.Login));
+				yield return GetUserByUserName(userItem.Login);
 			}
-
-			return users;
 		}
 
 	    public IEnumerable<User> SearchUsers(string query)
