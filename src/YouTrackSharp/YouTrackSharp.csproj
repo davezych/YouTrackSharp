@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\Sprint.cs" />
+    <Compile Include="Admin\Agile.cs" />
+    <Compile Include="Admin\AgileManagement.cs" />
     <Compile Include="Admin\AllUsersItem.cs" />
     <Compile Include="Admin\Filter.cs" />
     <Compile Include="Cmdlets\SetCommandCmdlet.cs" />
