@@ -54,6 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminManagement.cs" />
+    <Compile Include="Admin\State.cs" />
     <Compile Include="Admin\Sprint.cs" />
     <Compile Include="Admin\Agile.cs" />
     <Compile Include="Admin\AgileManagement.cs" />
