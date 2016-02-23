@@ -31,6 +31,7 @@
 
 #endregion
 
+using System;
 using System.Collections.Generic;
 using YouTrackSharp.Infrastructure;
 
@@ -47,7 +48,18 @@ namespace YouTrackSharp.Admin
 
         public State GetStateBundle(string bundleName)
         {
-            return _connection.Get<State>(string.Format("admin/customfield/stateBundle/{0}", bundleName));
+            return _connection.Get<State>($"admin/customfield/stateBundle/{bundleName}");
+        }
+
+        public void CreateUser(string loginName, string fullName, string email, string jabber, string password)
+        {
+            Func<string, string> encoder = System.Web.HttpUtility.UrlEncode;
+            _connection.Post($"admin/user?login={encoder(loginName)}&fullName={encoder(fullName)}&email={encoder(email)}&jabber={encoder(jabber)}&password={encoder(password)}", null);
+        }
+
+        public void AddUserToGroup(string loginName, string group)
+        {
+            _connection.Post($"admin/user/{loginName}/group/{group}", null);
         }
     }
 }
