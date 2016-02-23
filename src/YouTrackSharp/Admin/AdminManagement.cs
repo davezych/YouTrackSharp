@@ -33,6 +33,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using YouTrackSharp.Infrastructure;
 
 namespace YouTrackSharp.Admin
@@ -54,12 +55,24 @@ namespace YouTrackSharp.Admin
         public void CreateUser(string loginName, string fullName, string email, string jabber, string password)
         {
             Func<string, string> encoder = System.Web.HttpUtility.UrlEncode;
-            _connection.Post($"admin/user?login={encoder(loginName)}&fullName={encoder(fullName)}&email={encoder(email)}&jabber={encoder(jabber)}&password={encoder(password)}", null);
+
+            var jabberDetails = string.Empty;
+            if (!string.IsNullOrWhiteSpace(jabber))
+            {
+                jabberDetails = $"&jabber={encoder(jabber)}";
+            }
+
+            var data = new ExpandoObject();
+
+            _connection.Put($"admin/user/{encoder(loginName)}?fullName={encoder(fullName)}&email={encoder(email)}{jabberDetails}&password={encoder(password)}", data);
         }
 
         public void AddUserToGroup(string loginName, string group)
         {
-            _connection.Post($"admin/user/{loginName}/group/{group}", null);
+            Func<string, string> encoder = System.Web.HttpUtility.UrlEncode;
+            var data = new ExpandoObject();
+
+            _connection.Post($"admin/user/{loginName}/group/{group}", data);
         }
     }
 }
