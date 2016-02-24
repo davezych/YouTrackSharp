@@ -64,7 +64,7 @@ namespace YouTrackSharp.Admin
 
             var data = new ExpandoObject();
 
-            _connection.Put($"admin/user/{encoder(loginName)}?fullName={encoder(fullName)}&email={encoder(email)}{jabberDetails}&password={encoder(password)}", data);
+            _connection.Post($"admin/user?login={encoder(loginName)}&fullName={encoder(fullName)}&email={encoder(email)}{jabberDetails}&password={encoder(password)}", data);
         }
 
         public void AddUserToGroup(string loginName, string group)
